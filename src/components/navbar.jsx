@@ -4,7 +4,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 
-function NavBar() {
+function NavBar({ onRegisterClick, onLoginClick }) {
   const [total, setTotal] = useState(25000);
   const [token, setToken] = useState(false);
 
@@ -18,12 +18,12 @@ function NavBar() {
             <Nav className="me-auto">
               <Nav.Link><button>🍕Home</button></Nav.Link>
               <Nav.Link>
-                <button onClick={() => setToken(!token)}>
+                <button onClick={onLoginClick}>
                   {token ? '🔐Logout' : '🔐Login'}
                 </button>
               </Nav.Link>
               <Nav.Link>
-                <button>
+                <button onClick={onRegisterClick}>
                   {token ? '👤Profile' : '🔐Register'}
                 </button>
               </Nav.Link>
