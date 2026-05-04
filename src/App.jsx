@@ -4,23 +4,27 @@ import Footer from "./components/footer";
 import Home from "./components/home";
 import FormRegister from "./components/formRegister";
 import FormLogin from "./components/formLogin";
+import Cart from "./components/cart";
 
 
 function App() {
-  const [currentForm, setCurrentForm] = useState(null); // null, "login" o "register"
+  const [currentView, setCurrentView] = useState(null); // null, "login", "register" o "cart"
 
   return (
     
 
     <div className="app-container">
-      <alert>Hola! para revisar los nuevos componentes haz click en los botones Login y Register</alert>
+      <alert>Hola! para revisar el Hito 3 por favor hacer click en el boton del carrito de compras</alert>
     <NavBar 
-      onRegisterClick={() => setCurrentForm("register")} 
-      onLoginClick={() => setCurrentForm("login")}
+      onHomeClick={() => setCurrentView(null)}
+      onRegisterClick={() => setCurrentView("register")} 
+      onLoginClick={() => setCurrentView("login")}
+      onCartClick={() => setCurrentView("cart")}
     />
-       {currentForm === "register" && <FormRegister onClose={() => setCurrentForm(null)} />}
-       {currentForm === "login" && <FormLogin onClose={() => setCurrentForm(null)} />}
-       {currentForm === null && <Home />}   
+       {currentView === "register" && <FormRegister onClose={() => setCurrentView(null)} />}
+       {currentView === "login" && <FormLogin onClose={() => setCurrentView(null)} />}
+       {currentView === "cart" && <Cart />}
+       {currentView === null && <Home />}   
 
       <Footer />
     </div>
