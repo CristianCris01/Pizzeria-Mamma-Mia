@@ -14,7 +14,9 @@ function App() {
     
 
     <div className="app-container">
-      <alert>Hola! para revisar el Hito 3 por favor hacer click en el boton del carrito de compras</alert>
+      <alert>Hola! para revisar el Hito 3 por favor hacer click en el boton del carrito de compras.
+        Para revisar el Hito 4, por favor revisar el home donde se muestra una pizza desde la API y las otras 6 de la misma API.
+      </alert>
     <NavBar 
       onHomeClick={() => setCurrentView(null)}
       onRegisterClick={() => setCurrentView("register")} 
