@@ -1,35 +1,33 @@
-import { useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import NavBar from "./components/navbar";
 import Footer from "./components/footer";
-import Home from "./components/home";
-import FormRegister from "./components/formRegister";
-import FormLogin from "./components/formLogin";
-import Cart from "./components/cart";
-
+import Home from "./pages/home";
+import FormRegister from "./pages/formRegister";
+import FormLogin from "./pages/formLogin";
+import Cart from "./pages/cart";
+import Pizza from "./pages/pizza";
+import Profile from "./pages/profile";
+import NotFound from "./components/notFound";
 
 function App() {
-  const [currentView, setCurrentView] = useState(null); // null, "login", "register" o "cart"
-
   return (
-    
-
-    <div className="app-container">
-      <alert>Hola! para revisar el Hito 3 por favor hacer click en el boton del carrito de compras.
-        Para revisar el Hito 4, por favor revisar el home donde se muestra una pizza desde la API y las otras 6 de la misma API.
-      </alert>
-    <NavBar 
-      onHomeClick={() => setCurrentView(null)}
-      onRegisterClick={() => setCurrentView("register")} 
-      onLoginClick={() => setCurrentView("login")}
-      onCartClick={() => setCurrentView("cart")}
-    />
-       {currentView === "register" && <FormRegister onClose={() => setCurrentView(null)} />}
-       {currentView === "login" && <FormLogin onClose={() => setCurrentView(null)} />}
-       {currentView === "cart" && <Cart />}
-       {currentView === null && <Home />}   
-
-      <Footer />
-    </div>
+    <BrowserRouter>
+      <div className="app-container">
+        
+      
+        <NavBar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/register" element={<FormRegister />} />
+          <Route path="/login" element={<FormLogin />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/pizza/p001" element={<Pizza />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+        <Footer />
+      </div>
+    </BrowserRouter>
   );
 }
 

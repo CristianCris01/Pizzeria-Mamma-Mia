@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import Header from "./header";
-import CardPizza from "./cardpizza";
+import Header from "../components/header";
+import CardPizza from "../components/cardpizza";
 import Pizza from "./pizza";
 
 
@@ -32,5 +32,12 @@ function Home() {
 }
 
 export default Home;
+
+
+
+
+
+
+
 
 

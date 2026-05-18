@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import CardPizza from "./cardpizza";
+import CardPizza from "../components/cardpizza";
 
 const getPizza = async () => {
   const response = await fetch ("http://localhost:5000/api/pizzas/p001");

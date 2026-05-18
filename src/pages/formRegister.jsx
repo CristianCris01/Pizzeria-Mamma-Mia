@@ -87,16 +87,4 @@ function FormRegister({ onClose }) {
 }
 
 
-
 export default FormRegister;
-
-
-            
-            
-            
-            
-            
-
-
-
-
