@@ -2,9 +2,11 @@ import { Link } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
+import { useContext } from "react";
+import { GlobalContext } from "../context/context";
 
 function NavBar() {
-  const total = 25000;
+  const { total } = useContext(GlobalContext);
 
   return (
     <div id="navbar-edit">

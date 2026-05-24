@@ -21,7 +21,7 @@ function Home() {
   return (
     <div>
       <Header />
-      <Pizza />
+     { /*<Pizza />*/}
       <div className="cards-container">
         {pizzas.map((pizza, index) => (
           <CardPizza key={index} {...pizza} />
