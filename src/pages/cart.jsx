@@ -1,8 +1,10 @@
 import { useContext } from "react";
 import Button from "react-bootstrap/Button";
 import { GlobalContext } from "../context/context";
+import { UserContext } from "../context/authContext";
 
 function Cart() {
+  const {token} = useContext(UserContext);
   const { cart, total, updatePizzaCount } = useContext(GlobalContext);
 
   const formatPrice = (price) => price.toLocaleString("es-CL");
@@ -38,7 +40,7 @@ function Cart() {
         </div>
 
         <h2 className="cart-total">Total: ${formatPrice(total)}</h2>
-        <Button variant="dark">Pagar</Button>
+        <Button variant="dark" disabled={!token}>Pagar</Button>
       </section>
     </main>
   );

@@ -2,6 +2,8 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import { useContext } from "react";
 import { GlobalContext } from "../context/context";
+import { Link } from "react-router-dom";
+
 
 function CardPizza({ id, name, price, ingredients, img }) {
   const { addToCart } = useContext(GlobalContext);
@@ -26,9 +28,12 @@ function CardPizza({ id, name, price, ingredients, img }) {
               <li key={index}>{ingredient}</li>
             ))}
           </ul>
-          <Button variant="outline-primary" className="me-4">
-            Ver mas
-          </Button>
+          <Link to={`/pizza/${id}`}>
+            <Button variant="outline-primary" className="me-4">
+              Ver mas
+            </Button>
+          </Link>
+
           <Button variant="dark" onClick={() => addToCart(pizza)}>
             Agregar
           </Button>

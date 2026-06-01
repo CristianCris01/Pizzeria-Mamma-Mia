@@ -1,8 +1,12 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { UserContext } from "../context/authContext";
 
 function FormLogin({ onClose }) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const { login } = useContext(UserContext);
+    const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -11,47 +15,64 @@ function FormLogin({ onClose }) {
             alert("Por favor rellena todos los campos");
             return;
         }
+
         if (password.length < 6) {
-            alert("La contraseña debe tener al menos 6 caracteres");
+            alert("La contrasena debe tener al menos 6 caracteres");
             return;
         }
 
-        alert("Sesión iniciada correctamente");
+        alert("Sesion iniciada correctamente");
+        login();
         setEmail("");
         setPassword("");
-        onClose();
+
+        if (onClose) {
+            onClose();
+            return;
+        }
+
+        navigate("/");
     };
 
-    return(
-        <form 
-        className="loginForm" 
-        onSubmit={(e)=>{ handleSubmit(e) }}>
-            
-            <h1>Iniciar sesión</h1>
+    const handleCancel = () => {
+        if (onClose) {
+            onClose();
+            return;
+        }
 
-            <label htmlFor="email">Ingrese su correo electrónico</label>
-            
-            <input 
+        navigate("/");
+    };
+
+    return (
+        <form
+            className="loginForm"
+            onSubmit={handleSubmit}
+        >
+            <h1>Iniciar sesion</h1>
+
+            <label htmlFor="email">Ingrese su correo electronico</label>
+
+            <input
                 className="inputRegister"
-                type="email" 
-                placeholder="ejemplo@email.com" 
-                value={email} 
+                type="email"
+                placeholder="ejemplo@email.com"
+                value={email}
                 onChange={(e) => setEmail(e.target.value)}
             />
             <br />
-            <label htmlFor="password">Ingrese su contraseña</label>
-            
-            <input 
+            <label htmlFor="password">Ingrese su contrasena</label>
+
+            <input
                 className="inputRegister"
-                value={password} 
-                onChange={(e) => setPassword(e.target.value)} 
-                type="password" 
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                type="password"
                 placeholder="********"
             />
             <br />
-            <button className="buttonRegister" type="submit">Iniciar sesión</button>
+            <button className="buttonRegister" type="submit">Iniciar sesion</button>
             <br />
-            <button className="buttonRegister" type="button" onClick={onClose}>Cancelar</button>
+            <button className="buttonRegister" type="button" onClick={handleCancel}>Cancelar</button>
         </form>
     );
 }
