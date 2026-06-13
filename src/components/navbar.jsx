@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
@@ -10,6 +10,12 @@ import Button from "react-bootstrap/Button";
 function NavBar() {
   const {token, logout} = useContext(UserContext);
   const { total } = useContext(GlobalContext);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
 
   return (
     <div id="navbar-edit">
@@ -30,7 +36,7 @@ function NavBar() {
                   <Nav.Link as ={Link} to="/profile">
                    🔐 Profile
                   </Nav.Link>
-                  <Button variant="outline-light" onClick={logout}>
+                  <Button variant="outline-light" onClick={handleLogout}>
                    🚪 Logout
                   </Button>
 

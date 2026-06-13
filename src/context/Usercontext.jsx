@@ -2,7 +2,8 @@ import { useState } from "react";
 import { UserContext } from "./authContext";
 
 export const UserProvider = ({ children }) => {
-    const [token, setToken] = useState(true);
+    const [token, setToken] = useState(false);
+    const [user,setUser] = useState(null);
 
     const login = () => {
         setToken(true);
@@ -13,7 +14,7 @@ export const UserProvider = ({ children }) => {
     };
 
     return (
-        <UserContext.Provider value={{ token, login, logout }}>
+        <UserContext.Provider value={{ token, login, logout, user, setUser }}>
             {children}
         </UserContext.Provider>
     );

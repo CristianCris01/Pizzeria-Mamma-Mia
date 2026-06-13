@@ -7,41 +7,48 @@ function FormLogin({ onClose }) {
     const [password, setPassword] = useState("");
     const { login } = useContext(UserContext);
     const navigate = useNavigate();
+    const {setUser} = useContext(UserContext);
+  
 
-    const handleSubmit = (e) => {
+    const handleSubmit  = async(e) => {
         e.preventDefault();
 
-        if (!email || !password) {
+        if (!email || !password || password.length < 6) {
             alert("Por favor rellena todos los campos");
-            return;
+                return;
+            }
+        else {
+            const respuesta = await fetch ("http://localhost:5000/api/auth/login", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"
+                },
+                body: JSON.stringify({email, password}),
+            })
+            let data = await respuesta.json()
+
+            if (data.error){
+                alert(data.error)
+                return;
+
+            }
+            else {
+                alert("Sesion iniciada correctamente");
+                let usuarioLoged = {
+                    email: data.email,
+                    token: data.token,
+                }
+                    
+                setUser(usuarioLoged);
+                navigate("/");
+                login();
+               
+            }
         }
-
-        if (password.length < 6) {
-            alert("La contrasena debe tener al menos 6 caracteres");
-            return;
-        }
-
-        alert("Sesion iniciada correctamente");
-        login();
-        setEmail("");
-        setPassword("");
-
-        if (onClose) {
-            onClose();
-            return;
-        }
-
-        navigate("/");
     };
 
-    const handleCancel = () => {
-        if (onClose) {
-            onClose();
-            return;
-        }
+    
 
-        navigate("/");
-    };
+    
 
     return (
         <form
@@ -72,7 +79,7 @@ function FormLogin({ onClose }) {
             <br />
             <button className="buttonRegister" type="submit">Iniciar sesion</button>
             <br />
-            <button className="buttonRegister" type="button" onClick={handleCancel}>Cancelar</button>
+            <button className="buttonRegister" type="button" >Cancelar</button>
         </form>
     );
 }

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import {useNavigate} from "react-router-dom";
 
  
 
@@ -6,30 +7,45 @@ function FormRegister({ onClose }) {
   const [passwordCon, setPasswordCon] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate("");
 
-    const handleSubmit = (e) => {
+  
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
         
-        // Validar que todos los campos estén rellenados
-        if (!email || !password || !passwordCon) {
-            alert("Por favor rellena todos los campos");
+
+        
+        if (!email || !password || !passwordCon || passwordCon !== password || password.length < 6 ) {
+            alert("Por favor rellena todos los campos, recuerda que la contraseña debe tener al menos 6 caracteres y debe coincidir entre sí");
             return;
         }
         
-        if (password.length < 6) {
-            alert("La contraseña debe tener al menos 6 caracteres");
-            return;
-        }
-        else if (password !== passwordCon) {
-            alert("Las contraseñas no coinciden");
-            return;
-        }
         else {
-            alert("Registro exitoso");
-            setEmail("");
-            setPassword("");
-            setPasswordCon("");
-            onClose();
+        
+        
+            let user = {email, password};
+            let datos = JSON.stringify(user);
+
+            const respuesta = await fetch ("http://localhost:5000/api/auth/register",  {
+                method: "POST",
+                headers: {"Content-Type": "application/json"
+                },
+                body: datos,
+
+            });
+
+             let data = await respuesta.json();
+
+            if (data.error){
+                alert(data.error)
+                return;  
+            }
+            else {
+                alert("Registro exitoso");
+                navigate("/login");
+               
+            }  
         }
     };
 
@@ -45,13 +61,13 @@ function FormRegister({ onClose }) {
             <label htmlFor="email">Correo electrónico</label>
             
             <input
+                
                 className="inputRegister"
                 type="email"
                 placeholder="ejemplo@email.com" 
-                value={email} 
                 value={email}
                 onChange={(e) => {setEmail(e.target.value);
-                }}   
+                }}  required 
             ></input>
 
             <br/>
@@ -63,7 +79,7 @@ function FormRegister({ onClose }) {
                 placeholder="********"
                 value={password}
                 onChange={(e) => {setPassword (e.target.value)
-                }}
+                }}  requiered
             ></input>
 
             <br />
@@ -75,11 +91,11 @@ function FormRegister({ onClose }) {
                 placeholder="********"
                 value={passwordCon}
                 onChange={(e) => {setPasswordCon (e.target.value)
-                }}
+                }}  requiered
             ></input>
                 
             <br />
-            <button className="buttonRegister" type="submit">Registrarse</button>
+            <button className="buttonRegister" type="submit" onClick={handleSubmit}>Registrarse</button>
             <br />
             <button className="buttonRegister" type="button" onClick={onClose}>Cancelar</button>
         </form>
@@ -88,3 +104,16 @@ function FormRegister({ onClose }) {
 
 
 export default FormRegister;
+
+
+
+
+
+           
+            
+
+            
+        
+
+        
+           
